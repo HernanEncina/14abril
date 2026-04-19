@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - yum install -y python3
+
+  build:
+    commands:
+      - echo "Validating Flask app..."
+      - python3 -m py_compile app.py
+
+      - echo "Updating backup log..."
+      - echo "$(date) - pipeline run" >> backup.log
+
+artifacts:
+  files:
+    - '**/*'

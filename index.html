@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculator</title>
+</head>
+<body>
+
+<h1>Calculadora</h1>
+
+<!-- TecMilenio logo -->
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Logo_TecMilenio.png" width="200">
+
+<h2>Aritmética</h2>
+<input id="a" placeholder="A">
+<input id="b" placeholder="B">
+<select id="op">
+  <option>+</option>
+  <option>-</option>
+  <option>*</option>
+  <option>/</option>
+</select>
+<button onclick="calc()">Calcular</button>
+
+<h2>Binario</h2>
+<input id="num" placeholder="Número">
+<button onclick="binary()">Convertir</button>
+
+<h2>Lógica</h2>
+<input id="la" placeholder="A">
+<input id="lb" placeholder="B">
+<select id="lop">
+  <option>AND</option>
+  <option>OR</option>
+  <option>XOR</option>
+</select>
+<button onclick="logic()">Calcular</button>
+
+<h2>Resultado</h2>
+<pre id="output"></pre>
+
+<script>
+function calc() {
+  fetch("/calc", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      a: document.getElementById("a").value,
+      b: document.getElementById("b").value,
+      op: document.getElementById("op").value
+    })
+  }).then(r => r.json()).then(d => {
+    output.textContent = d.result;
+  });
+}
+
+function binary() {
+  fetch("/binary", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      num: document.getElementById("num").value
+    })
+  }).then(r => r.json()).then(d => {
+    output.textContent = d.result;
+  });
+}
+
+function logic() {
+  fetch("/logic", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      a: document.getElementById("la").value,
+      b: document.getElementById("lb").value,
+      op: document.getElementById("lop").value
+    })
+  }).then(r => r.json()).then(d => {
+    output.textContent = d.result;
+  });
+}
+</script>
+
+</body>
+</html>
